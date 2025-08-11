@@ -1,16 +1,18 @@
 from fpdf import FPDF
+import pandas as pd
 
 pdf = FPDF(orientation="P", unit="mm", format='A4')
 
-# adding page
-pdf.add_page()
+df = pd.read_csv('topics.csv')
 
-pdf.set_font(family="Times", style="B", size=12)
+for index, row in df.iterrows():
+    # adding page
+    pdf.add_page()
 
-pdf.cell(w=0, h=12, txt="hello there!", align="L", ln=1, border=0) #ln is the linebreak, height is suggested same as size
-
-pdf.set_font(family="Times", size=10)
-pdf.cell(w=0, h=12, txt="hi there!", align="L", ln=1, border=0)
+    pdf.set_font(family="Times", style="B", size=24)
+    pdf.set_text_color(100, 100, 100)
+    pdf.cell(w=0, h=12, txt=f"{row['Topic']}", align="L", ln=1) #ln is the linebreak, height is suggested same as size
+    pdf.line(10, 21, 200, 21)
 
 
 pdf.output('output.pdf')
